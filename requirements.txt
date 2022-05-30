@@ -1,0 +1,2 @@
+pyqt5>=5.15.12
+screeninfo=0.8
