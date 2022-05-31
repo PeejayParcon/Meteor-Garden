@@ -31,3 +31,25 @@ class MainWindow(QMainWindow):
         timer.start(1)
 
         self.uiComponents()
+        
+    def revealCount(self):
+        if self.variables.Start:
+            if self.variables.millisecs >= 999:
+                self.variables.millisecs = 0
+
+                if self.variables.seconds >= 59:
+                    self.variables.seconds = 0
+
+                    if self.variables.minutes >= 59:
+                        self.helpers._resetEvent()
+                        return
+                    else:
+                        self.variables.minutes += 1
+                else:
+                    self.variables.seconds += 1
+
+            self.variables.millisecs += 1
+
+        text = f"{'0' + str(self.variables.minutes) if self.variables.minutes < 10 else str(self.variables.minutes)} : {'0' + str(self.variables.seconds) if self.variables.seconds < 10 else str(self.variables.seconds)} : {('0' + str(self.variables.millisecs) if self.variables.millisecs < 10 else str(self.variables.millisecs))[0:2]}"
+ 
+        self.variables.counterlabel.setText('<h2>' + text + '</h2>')
