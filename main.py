@@ -12,3 +12,22 @@ import sys
 
 from methods import FundaMethods
 from variables import Variables
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Stopwatch")
+
+        self.variables = Variables(self)
+
+        self.setFixedSize(self.variables.window_width, self.variables.window_height)
+        self.move(QApplication.desktop().screen().rect().center() - self.rect().center())
+
+        self.helpers = FundaMethods(self.variables)
+
+        timer = QTimer(self)
+        timer.timeout.connect(self.revealCount)
+        timer.start(1)
+
+        self.uiComponents()
