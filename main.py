@@ -53,3 +53,24 @@ class MainWindow(QMainWindow):
         text = f"{'0' + str(self.variables.minutes) if self.variables.minutes < 10 else str(self.variables.minutes)} : {'0' + str(self.variables.seconds) if self.variables.seconds < 10 else str(self.variables.seconds)} : {('0' + str(self.variables.millisecs) if self.variables.millisecs < 10 else str(self.variables.millisecs))[0:2]}"
  
         self.variables.counterlabel.setText('<h2>' + text + '</h2>')
+        
+    def uiComponents(self):
+        self.variables.counterlabel.setFixedSize(int(self.variables.window_width * 0.75), int(self.variables.window_height * 0.10))
+        self.variables.counterlabel.move(int(self.rect().width() / 2 - self.variables.counterlabel.rect().width() / 2), int(self.variables.window_height * 0.13))
+
+        if self.variables.screen_rect.width() == 1024 and self.variables.screen_rect.height() == 768:
+            self.variables.counterlabel.setFont(QFont('Courier', 15, QFont.Bold))
+        else:
+            self.variables.counterlabel.setFont(QFont('Courier', 20, QFont.Bold))
+
+        self.variables.counterlabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+
+        # Start button
+        self.variables.startbutton.setFixedSize(self.variables.buttonwidth, self.variables.buttonheight)
+        self.variables.startbutton.move(int(self.variables.window_width * 0.17), int(self.variables.counterlabel.y() + self.variables.counterlabel.height() + (self.variables.window_height * 0.05)))
+        self.variables.startbutton.pressed.connect(self.helpers.startEv)
+
+        # Stop button
+        self.variables.stopbutton.setFixedSize(self.variables.buttonwidth, self.variables.buttonheight)
+        self.variables.stopbutton.move(int(self.variables.buttonwidth + self.variables.startbutton.x() + self.variables.window_width * 0.02), int(self.variables.counterlabel.y() + self.variables.counterlabel.height() + (self.variables.window_height * 0.05)))
+        self.variables.stopbutton.pressed.connect(self.helpers.stopEv)
