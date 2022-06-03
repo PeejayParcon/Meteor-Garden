@@ -74,3 +74,42 @@ class MainWindow(QMainWindow):
         self.variables.stopbutton.setFixedSize(self.variables.buttonwidth, self.variables.buttonheight)
         self.variables.stopbutton.move(int(self.variables.buttonwidth + self.variables.startbutton.x() + self.variables.window_width * 0.02), int(self.variables.counterlabel.y() + self.variables.counterlabel.height() + (self.variables.window_height * 0.05)))
         self.variables.stopbutton.pressed.connect(self.helpers.stopEv)
+    
+        # Reset button
+        self.variables.resetbutton.setFixedSize(self.variables.buttonwidth, self.variables.buttonheight)
+        self.variables.resetbutton.move(int(self.variables.buttonwidth + self.variables.stopbutton.x() + self.variables.window_width * 0.02), int(self.variables.counterlabel.y() + self.variables.counterlabel.height() + (self.variables.window_height * 0.05)))
+        self.variables.resetbutton.pressed.connect(self.helpers.resetEv)
+
+        # Split button
+        self.variables.splitbutton.setFixedSize(self.variables.buttonwidth, self.variables.buttonheight)
+        self.variables.splitbutton.move(int(self.variables.buttonwidth + self.variables.resetbutton.x() + self.variables.window_width * 0.02), int(self.variables.counterlabel.y() + self.variables.counterlabel.height() + (self.variables.window_height * 0.05)))
+        self.variables.splitbutton.pressed.connect(self.helpers.splitEv)
+
+        # Table widget
+        self.variables.datatable.setRowCount(10)
+        self.variables.datatable.setColumnCount(3)
+
+        if self.variables.screen_rect.height() >= 1080:
+            self.variables.datatable.setFixedSize(int(self.variables.window_width * 0.75), 263)
+        elif self.variables.screen_rect.height() >= 720:
+            self.variables.datatable.setFixedSize(int(self.variables.window_width * 0.75), 200)
+
+        if self.variables.screen_rect.width() == 1024 and self.variables.screen_rect.height() == 768:
+            self.variables.datatable.setFont(QFont('Arial', 8, QFont.Normal))
+
+        self.variables.datatable.move(int(self.rect().width() / 2 - self.variables.counterlabel.rect().width() / 2), int(self.variables.splitbutton.y() + self.variables.splitbutton.height() + (self.variables.window_height * 0.05)))
+        self.variables.datatable.verticalHeader().setVisible(False)
+        self.variables.datatable.setHorizontalHeaderLabels(["Split", "Time", "Length"])
+        self.variables.datatable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.variables.datatable.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.variables.datatable.setEditTriggers(QTableWidget.EditTrigger.NoEditTriggers)
+
+def stopwatch():
+    App = QApplication([])
+    main = MainWindow()
+    main.show()
+
+    sys.exit(App.exec())
+
+if __name__ == "__main__":
+    stopwatch()
